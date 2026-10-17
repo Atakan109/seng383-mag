@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Backend tests
+        run: |
+          if [ -f backend/package.json ]; then
+            cd backend && npm ci && npm test
+          else
+            echo "Backend yok, atlandı"
+          fi
+      - name: Frontend tests
+        run: |
+          if [ -f frontend/package.json ]; then
+            cd frontend && npm ci && npm test
+          else
+            echo "Frontend yok, atlandı"
+          fi
