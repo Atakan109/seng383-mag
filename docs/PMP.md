@@ -1,7 +1,7 @@
 # Project Management Plan (PMP)
 
 > The purpose of this PMP is to practice planning and tracking work in Jira. Keep it short: most of the content is a summary of what you set up in Jira.
-> Keep this file at `docs/PMP.md`. Each section is one Jira epic (PMP-1 ‚Ä¶ PMP-6); mark the epic Done when the section is complete.
+> Keep this file at `docs/PMP.md`. Each section is one Jira epic (PMP-1 … PMP-6); mark the epic Done when the section is complete.
 > Save screenshots in `docs/img/`.
 
 | Section | Content | Required by |
@@ -19,19 +19,19 @@
 
 ### Project and Jira Setup
 
-**Project in one sentence:**  
-**Jira project key:**  
-**Jira board link:**  
+**Project in one sentence:** A web-based decision support platform that brings parents and specialists together around one shared weekly schedule, task list and record of observations for a child, with a role-based AI summary that supports decisions but never makes them.  
+**Jira project key:** MAG  
+**Jira board link:** https://seng383-mag.atlassian.net/jira/software/projects/MAG/boards/1  
+
+Jira is connected to the team repository (https://github.com/Atakan109/seng383-mag) with the GitHub for Atlassian app. Every branch name and commit message starts with its Jira issue key (e.g., `MAG-20 Add PMP template`).
 
 ### Team and Roles
 
 | Name | Jira / GitHub username | Role |
 |---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
+| Atakan Yurdasucu | Atakan Yurdasucu / Atakan109 | Project Manager, Developer (M1, M2) |
+| Gökhan Kara | Gökhan Kara / gokhankaraa | Developer (M4, M6, M8) |
+| Yasin Mirza Bozkurt | Yasin Mirza Bozkurt / ymirzabzkrt | Developer, Tester (M3, M5, M7) |
 
 ---
 
