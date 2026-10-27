@@ -1,8 +1,8 @@
 # Software Requirements Specification (SRS)
 
-**Team name:**  
-**Version:** ☐ First version (Week 6) ☐ Final (Week 10)  
-**Last updated:** YYYY-MM-DD
+**Team name:** MAG  
+**Version:** ☒ First version (Week 6) ☐ Final (Week 10)  
+**Last updated:** 2026-10-27
 
 > Keep this file at `docs/SRS.md`. Keep it short and specific: every requirement should be testable.
 > Requirement IDs are used in Jira tasks, commits and tests, so do not renumber them once created.
@@ -12,14 +12,16 @@
 
 ## 1. Introduction
 
-**Purpose of the system** (2–3 sentences):
+**Purpose of the system:**
+The system is a web-based decision support platform that brings together the people who follow a child's development (parents and specialists such as teachers, psychologists, doctors, special education teachers and coaches) around one shared weekly schedule, task list and record of observations. An AI component summarizes the week's records for each reader according to their role. The AI only supports decisions: it never makes them and never suggests a diagnosis or treatment.
 
 **Users of the system:**
 
 | User type | Description |
 |---|---|
-| | |
-| | |
+| Parent | Owns the child's data, sees all of the child's records, and links or unlinks specialists. |
+| Specialist | Teacher, psychologist, doctor, special education teacher or coach. Works only with the children they are linked to. |
+| Child | Sees only their own tasks and schedule, and marks tasks as done. |
 
 ---
 
@@ -28,18 +30,27 @@
 > Group requirements by module (M1–M8, same as your Jira epics). Use the format: "The system shall …".
 > Priority: **Must** (required for v1.0) / **Should** (planned) / **Could** (if time allows).
 
-### M1 – (module name)
+### M1 – Login and roles
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M1-01 | The system shall … | Must |
-| FR-M1-02 | | |
+| FR-M1-01 | The system shall allow a registered user to log in with an email address and a password. | Must |
+| FR-M1-02 | The system shall reject a login with a wrong email or password and show an error message. | Must |
+| FR-M1-03 | The system shall take the user's role (parent, specialist or child) from the account; the user shall not choose a role at login. | Must |
+| FR-M1-04 | The system shall give the user a signed JWT after a successful login and require it for every protected API request. | Must |
+| FR-M1-05 | The system shall show each role only its own screens and reject API requests that the role is not allowed to make. | Must |
+| FR-M1-06 | The system shall allow a logged-in user to log out. | Should |
 
-### M2 – (module name)
+### M2 – Linking specialists
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M2-01 | | |
+| FR-M2-01 | The system shall allow a parent to link a registered specialist to their child by entering the specialist's email address and type. | Must |
+| FR-M2-02 | The system shall show an error message when the entered email does not belong to a registered specialist. | Must |
+| FR-M2-03 | The system shall list the specialists linked to the child (name, email and type). | Must |
+| FR-M2-04 | The system shall allow a parent to unlink a specialist after a confirmation step. | Must |
+| FR-M2-05 | The system shall reject every API request about a child from a specialist who is not currently linked to that child, even if the specialist's token is still valid. | Must |
+| FR-M2-06 | The system shall show a specialist the list of children they are linked to. | Must |
 
 ### M3 – (module name)
 
@@ -81,27 +92,23 @@
 
 ## 3. Non-Functional Requirements
 
-> Keep only the ones that matter for your system (3–5 is enough). Make each one measurable.
-
 | ID | Category | Requirement |
 |---|---|---|
-| NFR-01 | Performance | e.g., Pages load in under 2 seconds. |
-| NFR-02 | Security | e.g., Passwords are stored hashed. |
-| NFR-03 | Usability | |
-| NFR-04 | | |
+| NFR-01 | Security | Passwords are stored only as salted hashes (e.g., bcrypt); plain-text passwords are never stored or logged. |
+| NFR-02 | Security | Every request about a child is checked on the backend against the current parent/specialist–child link; hiding a button in the UI is never the only protection. |
+| NFR-03 | Privacy | Only synthetic data created by the seed script is used. The AI service receives only records the reader is allowed to see, and the AI API key is kept on the backend and never pushed to GitHub. |
+| NFR-04 | Testability | The AI module has a mock mode that is used in all tests and in CI. Branch coverage is at least 40% at v0.2 and at least 60% at v1.0. |
+| NFR-05 | Installability | The application runs on a local computer by following the README, without any cloud deployment. |
 
 ---
 
 ## 4. Critical Flows and Acceptance Criteria
 
-> Choose the 3 most important user flows. Each one will have an end-to-end test (Week 10).
-> Write acceptance criteria as Given / When / Then.
-
 | Flow | Related requirements | Acceptance criteria |
 |---|---|---|
-| Flow 1: | FR-… | **Given** … **When** … **Then** … |
-| Flow 2: | FR-… | **Given** … **When** … **Then** … |
-| Flow 3: | FR-… | **Given** … **When** … **Then** … |
+| Flow 1: Linking and unlinking a specialist | FR-M1-01, FR-M2-01, FR-M2-04, FR-M2-05 | **Given** a logged-in parent and a registered specialist **When** the parent links the specialist by email **Then** the child appears in the specialist's list of children; **and when** the parent unlinks the specialist **Then** every request of that specialist about the child is rejected. |
+| Flow 2: Assigning and completing a task | FR-M1-05, FR-M4-… | **Given** a specialist linked to a child **When** the specialist assigns a task **Then** the task appears in the child's task list; **and when** the child marks it as done **Then** the specialist sees its status as done. |
+| Flow 3: Weekly AI summary | FR-M5-…, FR-M7-…, FR-M8-… | **Given** a week with tasks and specialist entries **When** the parent requests the weekly summary **Then** a summary labelled "AI-generated" is shown with links to its source records, using only records the parent is allowed to see (mock AI in tests). |
 
 ---
 
@@ -115,4 +122,4 @@
 
 | Date | Change | By |
 |---|---|---|
-| | First version | |
+| 2026-10-27 | First version: introduction, M1, M2, non-functional requirements, critical flows | Atakan Yurdasucu |
