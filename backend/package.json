@@ -1,0 +1,24 @@
+{
+  "name": "mag-backend",
+  "version": "1.0.0",
+  "description": "MAG walking skeleton backend",
+  "main": "src/server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node src/server.js",
+    "seed": "node src/seed.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "supertest": "^7.3.1"
+  }
+}
