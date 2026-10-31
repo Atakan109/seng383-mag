@@ -2,7 +2,7 @@
 
 **Team name:** MAG  
 **Version:** ☒ First version (Week 6) ☐ Final (Week 10)  
-**Last updated:** 2026-10-27
+**Last updated:** 2026-10-31
 
 > Keep this file at `docs/SRS.md`. Keep it short and specific: every requirement should be testable.
 > Requirement IDs are used in Jira tasks, commits and tests, so do not renumber them once created.
@@ -58,11 +58,16 @@ The system is a web-based decision support platform that brings together the peo
 |---|---|---|
 | FR-M3-01 | | |
 
-### M4 – (module name)
+### M4 – Tasks
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M4-01 | | |
+| FR-M4-01 | The system shall allow a parent or a linked specialist to assign a task to a child with a title, description, development area and due date. | Must |
+| FR-M4-02 | The system shall reject a task without a title, development area or due date and show an error message. | Must |
+| FR-M4-03 | The system shall show a child only their own tasks. | Must |
+| FR-M4-04 | The system shall allow a child to mark their own task as done. | Must |
+| FR-M4-05 | The system shall show the assigner the tasks they assigned, with the current status of each task. | Must |
+| FR-M4-06 | The system shall show a parent all tasks of their child, with the current status of each task. | Must |
 
 ### M5 – (module name)
 
@@ -70,11 +75,15 @@ The system is a web-based decision support platform that brings together the peo
 |---|---|---|
 | FR-M5-01 | | |
 
-### M6 – (module name)
+### M6 – Documents
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M6-01 | | |
+| FR-M6-01 | The system shall allow a parent or a linked specialist to upload a PDF or image file for a child. | Must |
+| FR-M6-02 | The system shall reject a file that is not a PDF, JPEG or PNG and show an error message. | Must |
+| FR-M6-03 | The system shall list the child's documents with their name, type, uploader and upload date. | Must |
+| FR-M6-04 | The system shall allow a parent or a linked specialist to view and download a listed document. | Must |
+| FR-M6-05 | The system shall hide documents from the child and reject every document request made with a child account. | Must |
 
 ### M7 – (module name)
 
@@ -82,11 +91,18 @@ The system is a web-based decision support platform that brings together the peo
 |---|---|---|
 | FR-M7-01 | | |
 
-### M8 – (module name)
+### M8 – Role-based AI summary
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M8-01 | | |
+| FR-M8-01 | The system shall generate a summary of a child's tasks and specialist entries for a selected week when a parent or a linked specialist requests it. | Must |
+| FR-M8-02 | The system shall use separate prompts for parent and specialist summaries. | Must |
+| FR-M8-03 | The system shall label every summary "AI-generated". | Must |
+| FR-M8-04 | The system shall show each summary with links to the records it is based on. | Must |
+| FR-M8-05 | The system shall send the AI service only records the reader is allowed to see. | Must |
+| FR-M8-06 | The system shall include in every AI prompt an instruction not to make decisions or suggest a diagnosis or treatment, and shall present summaries as suggestions. | Must |
+| FR-M8-07 | The system shall not provide summaries to child accounts and shall reject summary requests made with a child account. | Must |
+| FR-M8-08 | The system shall allow the reader to mark a summary as helpful or incorrect. | Should |
 
 ---
 
@@ -107,8 +123,8 @@ The system is a web-based decision support platform that brings together the peo
 | Flow | Related requirements | Acceptance criteria |
 |---|---|---|
 | Flow 1: Linking and unlinking a specialist | FR-M1-01, FR-M2-01, FR-M2-04, FR-M2-05 | **Given** a logged-in parent and a registered specialist **When** the parent links the specialist by email **Then** the child appears in the specialist's list of children; **and when** the parent unlinks the specialist **Then** every request of that specialist about the child is rejected. |
-| Flow 2: Assigning and completing a task | FR-M1-05, FR-M4-… | **Given** a specialist linked to a child **When** the specialist assigns a task **Then** the task appears in the child's task list; **and when** the child marks it as done **Then** the specialist sees its status as done. |
-| Flow 3: Weekly AI summary | FR-M5-…, FR-M7-…, FR-M8-… | **Given** a week with tasks and specialist entries **When** the parent requests the weekly summary **Then** a summary labelled "AI-generated" is shown with links to its source records, using only records the parent is allowed to see (mock AI in tests). |
+| Flow 2: Assigning and completing a task | FR-M1-05, FR-M4-01, FR-M4-04, FR-M4-05 | **Given** a specialist linked to a child **When** the specialist assigns a task **Then** the task appears in the child's task list; **and when** the child marks it as done **Then** the specialist sees its status as done. |
+| Flow 3: Weekly AI summary | FR-M5-…, FR-M7-…, FR-M8-01, FR-M8-03, FR-M8-04, FR-M8-05 | **Given** a week with tasks and specialist entries **When** the parent requests the weekly summary **Then** a summary labelled "AI-generated" is shown with links to its source records, using only records the parent is allowed to see (mock AI in tests). |
 
 ---
 
@@ -123,3 +139,4 @@ The system is a web-based decision support platform that brings together the peo
 | Date | Change | By |
 |---|---|---|
 | 2026-10-27 | First version: introduction, M1, M2, non-functional requirements, critical flows | Atakan Yurdasucu |
+| 2026-10-31 | Added M4, M6 and M8 requirements; added M4 and M8 references to critical flows | Gökhan Kara |
