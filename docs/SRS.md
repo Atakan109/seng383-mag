@@ -56,7 +56,12 @@ The system is a web-based decision support platform that brings together the peo
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M3-01 | | |
+| FR-M3-01 | The system shall allow a parent or a linked specialist to add an event to the child's weekly schedule with a title, date, start time, end time and event type. | Must |
+| FR-M3-02 | The system shall reject an event without a title, date, start time or end time and show an error message. | Must |
+| FR-M3-03 | The system shall display the child's schedule in a weekly calendar view. | Must |
+| FR-M3-04 | The system shall show a child only their own schedule and upcoming events. | Must |
+| FR-M3-05 | The system shall allow the event creator (parent or linked specialist) to edit or delete an existing scheduled event. | Should |
+| FR-M3-06 | The system shall filter schedule events by child when viewed by a parent or a linked specialist. | Must |
 
 ### M4 – Tasks
 
