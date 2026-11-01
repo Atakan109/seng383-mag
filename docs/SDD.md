@@ -45,11 +45,11 @@ flowchart LR
 |---|---|---|
 | M1 | Backend: `routes/auth` (login), `middleware/auth` (verify JWT, `requireRole`). Frontend: `LoginPage`, `AuthContext`, `ProtectedRoute` (one route set per role) | FR-M1-01 … FR-M1-06 |
 | M2 | Backend: `routes/specialistLinks`, `middleware/childAccess` (checks the current link on every request about a child). Frontend: `LinkedSpecialistsPage` (parent), `MyChildrenPage` (specialist) | FR-M2-01 … FR-M2-06 |
-| M3 | | |
+| M3 | Backend: `routes/schedule`, `services/scheduleService`. Frontend: `WeeklySchedulePage`, `AddEventModal` (parent, specialist), `ChildScheduleView` (child) | FR-M3-01 … FR-M3-06 |
 | M4 | Backend: `routes/tasks`, `services/taskService`. Frontend: `ChildTasksPage` (child), `AssignTaskForm`, `AssignedTasksPage` (parent, specialist) | FR-M4-01 … FR-M4-06 |
-| M5 | | |
+| M5 | Backend: `routes/entries`, `services/entryService`. Frontend: `SpecialistEntriesPage`, `NewEntryForm`, `EditEntryModal` | FR-M5-01 … FR-M5-06 |
 | M6 | Backend: `routes/documents`, `services/documentService`, file upload with `multer`. Frontend: `DocumentsPage`, `UploadDocumentForm` | FR-M6-01 … FR-M6-05 |
-| M7 | | |
+| M7 | Backend: `routes/statistics`, `services/statisticsService`. Frontend: `WeeklyStatsCard` (parent dashboard), `ChildProgressWidget` (child dashboard) | FR-M7-01 … FR-M7-06 |
 | M8 | Backend: `routes/summary`, `services/summaryService`, `ai/aiClient` (the single AI module: real provider or mock), `ai/prompts` (parent and specialist prompts). Frontend: `WeeklySummaryCard` | FR-M8-01 … FR-M8-07 |
 
 ---
@@ -148,6 +148,14 @@ All endpoints except `/api/health` and `/api/auth/login` need a valid JWT. Endpo
 | POST | `/api/children/:childId/documents` | Upload a PDF, JPEG or PNG (parent, linked specialist) | M6 |
 | GET | `/api/children/:childId/documents/:documentId/file` | View or download a document (parent, linked specialist) | M6 |
 | GET | `/api/children/:childId/summary?week=...` | Get the weekly summary with source record ids (parent, linked specialist) | M8 |
+| GET | `/api/children/:childId/events?week=...` | List schedule events for the selected week (parent, linked specialist, child) | M3 |
+| POST | `/api/children/:childId/events` | Create a schedule event (parent, linked specialist) | M3 |
+| PUT | `/api/children/:childId/events/:eventId` | Update a schedule event (event creator) | M3 |
+| DELETE | `/api/children/:childId/events/:eventId` | Delete a schedule event (event creator) | M3 |
+| GET | `/api/children/:childId/entries` | List specialist observation entries (parent, linked specialist) | M5 |
+| POST | `/api/children/:childId/entries` | Create an observation entry (linked specialist) | M5 |
+| PUT | `/api/children/:childId/entries/:entryId` | Edit an observation entry and set edited=true (authoring specialist) | M5 |
+| GET | `/api/children/:childId/statistics/weekly?week=...` | Get weekly task completion rate overall and by area (parent, child) | M7 |
 
 ---
 
