@@ -39,29 +39,29 @@ Jira is connected to the team repository (https://github.com/Atakan109/seng383-m
 
 ### Work Packages (Epics)
 
-> One row per Jira epic. Number of tasks = how many tasks you created under that epic.
+> Number of tasks: tasks under the epic in Jira on the date of this section. Module tasks for Sprint 2 and 3 are created at the start of each sprint.
 
 | Epic | Owner | Number of tasks | Planned sprint(s) |
 |---|---|---|---|
-| M1 | | | |
-| M2 | | | |
-| M3 | | | |
-| M4 | | | |
-| M5 | | | |
-| M6 | | | |
-| M7 | | | |
-| M8 | | | |
+| M1 – Login and roles | Atakan Yurdasucu | 0 | Sprint 2 |
+| M2 – Linking specialists | Atakan Yurdasucu | 0 | Sprint 2 |
+| M3 – Weekly schedule | Yasin Mirza Bozkurt | 0 | Sprint 2 |
+| M4 – Tasks | Gökhan Kara | 3 (walking skeleton) | Sprint 1, Sprint 2 |
+| M5 – Specialist entries | Yasin Mirza Bozkurt | 0 | Sprint 3 |
+| M6 – Documents | Gökhan Kara | 0 | Sprint 3 |
+| M7 – Weekly statistics | Yasin Mirza Bozkurt | 0 | Sprint 3 |
+| M8 – Role-based AI summary | Gökhan Kara | 0 | Sprint 3 |
+
+Documentation epics: PMP-1 … PMP-6 (Atakan), SRS and DESIGN (each member writes the sections of their own modules).
 
 ### Sprint Plan
 
-> One row per Jira sprint. Align sprints with the weekly schedule.
-
 | Sprint | Weeks | Sprint goal | Ends with |
 |---|---|---|---|
-| Sprint 1 | | | Walking skeleton (v0.0), Week 6 |
-| Sprint 2 | | | Release v0.1, mid-term |
-| Sprint 3 | | | Release v0.2, Week 10 |
-| Sprint 4 | | | Release v1.0, final |
+| Sprint 1 | Weeks 4–6 (24 Oct – 8 Nov) | Repository, Jira and CI set up; SRS and SDD first version; walking skeleton (SQLite → Express → React) | Walking skeleton (v0.0), Week 6 |
+| Sprint 2 | Weeks 7–9 (9 – 29 Nov) | M1–M4 working end to end with tests; first end-to-end test running in CI | Release v0.1, mid-term (Week 9, Section 2) |
+| Sprint 3 | Week 10 (30 Nov – 6 Dec) | M5–M8; end-to-end tests for the 3 critical flows; branch coverage ≥ 40%; SRS and SDD final | Release v0.2, Week 10 |
+| Sprint 4 | Weeks 11–12 (7 – 20 Dec) | An end-to-end test for each of M1–M8; branch coverage ≥ 60%; final report and demo | Release v1.0, final (Week 12) |
 
 ---
 
