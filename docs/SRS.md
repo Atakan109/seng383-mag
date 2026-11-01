@@ -52,11 +52,16 @@ The system is a web-based decision support platform that brings together the peo
 | FR-M2-05 | The system shall reject every API request about a child from a specialist who is not currently linked to that child, even if the specialist's token is still valid. | Must |
 | FR-M2-06 | The system shall show a specialist the list of children they are linked to. | Must |
 
-### M3 – (module name)
+### M3 – Weekly schedule
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M3-01 | | |
+| FR-M3-01 | The system shall allow a parent or a linked specialist to add an event to the child's weekly schedule with a title, date, start time, end time and event type. | Must |
+| FR-M3-02 | The system shall reject an event without a title, date, start time or end time and show an error message. | Must |
+| FR-M3-03 | The system shall display the child's schedule in a weekly calendar view. | Must |
+| FR-M3-04 | The system shall show a child only their own schedule and upcoming events. | Must |
+| FR-M3-05 | The system shall allow the event creator (parent or linked specialist) to edit or delete an existing scheduled event. | Should |
+| FR-M3-06 | The system shall filter schedule events by child when viewed by a parent or a linked specialist. | Must |
 
 ### M4 – Tasks
 
@@ -69,11 +74,16 @@ The system is a web-based decision support platform that brings together the peo
 | FR-M4-05 | The system shall show the assigner the tasks they assigned, with the current status of each task. | Must |
 | FR-M4-06 | The system shall show a parent all tasks of their child, with the current status of each task. | Must |
 
-### M5 – (module name)
+### M5 – Specialist entries
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M5-01 | | |
+| FR-M5-01 | The system shall allow a linked specialist to create a dated observation entry for a child with a date, entry type, development area, title and notes. | Must |
+| FR-M5-02 | The system shall reject an observation entry without a title or note content and show an error message. | Must |
+| FR-M5-03 | The system shall allow the authoring specialist to edit an existing observation entry. | Must |
+| FR-M5-04 | The system shall permanently mark any edited observation entry with an "edited" label visible to viewers. | Must |
+| FR-M5-05 | The system shall show a child's observation entries to the parent and linked specialists. | Must |
+| FR-M5-06 | The system shall hide all specialist entries from the child and reject any entry request made with a child account. | Must |
 
 ### M6 – Documents
 
@@ -85,11 +95,16 @@ The system is a web-based decision support platform that brings together the peo
 | FR-M6-04 | The system shall allow a parent or a linked specialist to view and download a listed document. | Must |
 | FR-M6-05 | The system shall hide documents from the child and reject every document request made with a child account. | Must |
 
-### M7 – (module name)
+### M7 – Weekly statistics
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-M7-01 | | |
+| FR-M7-01 | The system shall calculate the overall task completion rate (completed tasks / total tasks) for a selected week. | Must |
+| FR-M7-02 | The system shall break down the task completion rate by development area for the selected week. | Must |
+| FR-M7-03 | The system shall display the weekly completion statistics on the parent dashboard. | Must |
+| FR-M7-04 | The system shall update the statistics dynamically when a child marks a task as done. | Must |
+| FR-M7-05 | The system shall display weekly progress indicators and summary numbers on the child dashboard. | Should |
+| FR-M7-06 | The system shall allow navigating between different weeks to view historical completion statistics. | Should |
 
 ### M8 – Role-based AI summary
 
