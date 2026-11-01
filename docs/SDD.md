@@ -46,11 +46,11 @@ flowchart LR
 | M1 | Backend: `routes/auth` (login), `middleware/auth` (verify JWT, `requireRole`). Frontend: `LoginPage`, `AuthContext`, `ProtectedRoute` (one route set per role) | FR-M1-01 … FR-M1-06 |
 | M2 | Backend: `routes/specialistLinks`, `middleware/childAccess` (checks the current link on every request about a child). Frontend: `LinkedSpecialistsPage` (parent), `MyChildrenPage` (specialist) | FR-M2-01 … FR-M2-06 |
 | M3 | | |
-| M4 | | |
+| M4 | Backend: `routes/tasks`, `services/taskService`. Frontend: `ChildTasksPage` (child), `AssignTaskForm`, `AssignedTasksPage` (parent, specialist) | FR-M4-01 … FR-M4-06 |
 | M5 | | |
-| M6 | | |
+| M6 | Backend: `routes/documents`, `services/documentService`, file upload with `multer`. Frontend: `DocumentsPage`, `UploadDocumentForm` | FR-M6-01 … FR-M6-05 |
 | M7 | | |
-| M8 | | |
+| M8 | Backend: `routes/summary`, `services/summaryService`, `ai/aiClient` (the single AI module: real provider or mock), `ai/prompts` (parent and specialist prompts). Frontend: `WeeklySummaryCard` | FR-M8-01 … FR-M8-07 |
 
 ---
 
@@ -119,6 +119,7 @@ erDiagram
         int child_id
         int uploaded_by
         string file_name
+        string stored_name
         string mime_type
         datetime uploaded_at
     }
@@ -140,6 +141,13 @@ All endpoints except `/api/health` and `/api/auth/login` need a valid JWT. Endpo
 | POST | `/api/children/:childId/specialists` | Link a registered specialist by email and type (parent only) | M2 |
 | DELETE | `/api/children/:childId/specialists/:specialistId` | Unlink a specialist (parent only) | M2 |
 | GET | `/api/tasks` | Walking skeleton: list tasks (will move under `/api/children/:childId/tasks`) | M4 |
+| GET | `/api/children/:childId/tasks` | List the child's tasks (parent, linked specialist, child) | M4 |
+| POST | `/api/children/:childId/tasks` | Assign a task (parent, linked specialist) | M4 |
+| PATCH | `/api/children/:childId/tasks/:taskId` | Mark a task as done (child) | M4 |
+| GET | `/api/children/:childId/documents` | List documents (parent, linked specialist) | M6 |
+| POST | `/api/children/:childId/documents` | Upload a PDF, JPEG or PNG (parent, linked specialist) | M6 |
+| GET | `/api/children/:childId/documents/:documentId/file` | View or download a document (parent, linked specialist) | M6 |
+| GET | `/api/children/:childId/summary?week=...` | Get the weekly summary with source record ids (parent, linked specialist) | M8 |
 
 ---
 
@@ -186,7 +194,7 @@ sequenceDiagram
     FE->>API: GET /api/children/:childId/tasks
     API-->>FE: tasks
     Child->>FE: mark task as done
-    FE->>API: PATCH /api/tasks/:id {status: done}
+    FE->>API: PATCH /api/children/:childId/tasks/:taskId {status: done}
     API->>DB: update TASK
     API-->>FE: 200 OK
     Note over Specialist,FE: The specialist now sees the status as done
