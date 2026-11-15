@@ -1,6 +1,17 @@
+const bcrypt = require('bcryptjs');
 const { openDatabase } = require('./db');
 
 // Synthetic sample data only. No real personal data.
+
+// Test-only password shared by all sample users. Never use it for a real account.
+const SAMPLE_PASSWORD = 'mag-demo-123';
+
+const sampleUsers = [
+  { name: 'Demo Parent', email: 'parent@mag.test', role: 'parent' },
+  { name: 'Demo Specialist', email: 'specialist@mag.test', role: 'specialist' },
+  { name: 'Demo Child', email: 'child@mag.test', role: 'child' },
+];
+
 const sampleTasks = [
   {
     title: 'Read for 20 minutes',
@@ -22,15 +33,37 @@ const sampleTasks = [
   },
 ];
 
-// Replaces all tasks with the sample tasks.
+// Replaces all users, children and tasks with the sample data.
 function seed(db) {
+  // Children point to users, so they are deleted first.
+  db.prepare('DELETE FROM children').run();
+  db.prepare('DELETE FROM users').run();
   db.prepare('DELETE FROM tasks').run();
-  const insert = db.prepare(
+
+  // Passwords are stored only as bcrypt hashes, never as plain text.
+  const passwordHash = bcrypt.hashSync(SAMPLE_PASSWORD, 10);
+  const insertUser = db.prepare(
+    `INSERT INTO users (name, email, password_hash, role)
+     VALUES (@name, @email, @passwordHash, @role)`
+  );
+  const userIds = {};
+  for (const user of sampleUsers) {
+    const result = insertUser.run({ ...user, passwordHash });
+    userIds[user.role] = result.lastInsertRowid;
+  }
+
+  db.prepare('INSERT INTO children (parent_id, user_id, name) VALUES (?, ?, ?)').run(
+    userIds.parent,
+    userIds.child,
+    'Demo Child'
+  );
+
+  const insertTask = db.prepare(
     `INSERT INTO tasks (title, description, development_area, due_date)
      VALUES (@title, @description, @developmentArea, @dueDate)`
   );
   for (const task of sampleTasks) {
-    insert.run(task);
+    insertTask.run(task);
   }
 }
 
@@ -38,8 +71,8 @@ function seed(db) {
 if (require.main === module) {
   const db = openDatabase();
   seed(db);
-  console.log(`Seeded ${sampleTasks.length} tasks`);
+  console.log(`Seeded ${sampleUsers.length} users, 1 child and ${sampleTasks.length} tasks`);
   db.close();
 }
 
-module.exports = { seed, sampleTasks };
+module.exports = { seed, sampleUsers, sampleTasks, SAMPLE_PASSWORD };
