@@ -232,11 +232,13 @@ sequenceDiagram
 
 ## 6. User Interface
 
-> Add sketches or screenshots of the main screens (hand-drawn wireframes are fine).
-
 | Screen | Image | Module |
 |---|---|---|
-| | `docs/img/…` | |
+| Weekly Schedule | `docs/m3-m5-m7-sketches.png.jfif` | M3 |
+| Specialist Entries | `docs/m3-m5-m7-sketches.png.jfif` | M5 |
+| Weekly Statistics | `docs/m3-m5-m7-sketches.png.jfif` | M7 |
+
+![UI Sketches for M3, M5, and M7](docs/m3-m5-m7-sketches.png.jfif)
 
 ---
 
