@@ -139,7 +139,7 @@ The system is a web-based decision support platform that brings together the peo
 |---|---|---|
 | Flow 1: Linking and unlinking a specialist | FR-M1-01, FR-M2-01, FR-M2-04, FR-M2-05 | **Given** a logged-in parent and a registered specialist **When** the parent links the specialist by email **Then** the child appears in the specialist's list of children; **and when** the parent unlinks the specialist **Then** every request of that specialist about the child is rejected. |
 | Flow 2: Assigning and completing a task | FR-M1-05, FR-M4-… | **Given** a specialist linked to a child **When** the specialist assigns a task **Then** the task appears in the child's task list; **and when** the child marks it as done **Then** the specialist sees its status as done. |
-| Flow 3: Weekly AI summary | FR-M5-…, FR-M7-…, FR-M8-… | **Given** a week with tasks and specialist entries **When** the parent requests the weekly summary **Then** a summary labelled "AI-generated" is shown with links to its source records, using only records the parent is allowed to see (mock AI in tests). |
+| Flow 3: Weekly AI summary | FR-M5-01, FR-M5-05, FR-M7-01, FR-M7-03, FR-M8-01, FR-M8-02, FR-M8-03, FR-M8-04, FR-M8-05, FR-M8-06 | **Given** a week with tasks and specialist entries **When** the parent requests the weekly summary **Then** a summary labelled "AI-generated" is shown with links to its source records, using only records the parent is allowed to see (mock AI in tests). |
 
 ---
 
