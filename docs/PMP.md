@@ -67,14 +67,27 @@ Documentation epics: PMP-1 … PMP-6 (Atakan), SRS and DESIGN (each member write
 
 ## PMP-3. Progress Review: Mid-term (v0.1)
 
-**Jira board screenshot:**  
+**Review date:** 21 November 2026 (Sprint 2, second of three weeks). This section is updated again when v0.1 is released.
+
+**Jira board screenshot (Sprint 2, 21 Nov):**
+
+![Sprint 2 board on 21 Nov 2026](img/pmp3-board-2026-11-21.png)
 
 | Epic | Planned for this point | Status (Done / In progress / Not started) |
 |---|---|---|
-| | | |
-| | | |
+| M1 – Login and roles | Users table, login API (JWT), login page, first e2e test | **In progress** – users and children tables with seed users done (MAG-35); login API (MAG-36), login page (MAG-37) and e2e test (MAG-47) not started |
+| M2 – Linking specialists | Link API with the childAccess check, parent and specialist pages | **Not started** (MAG-38, MAG-39) |
+| M3 – Weekly schedule | Event API and weekly schedule page | **Not started** (MAG-45, MAG-46) |
+| M4 – Tasks | Task API under `/api/children/:childId/tasks`, assign and child pages | **In progress** – task list done in the walking skeleton (Sprint 1); Sprint 2 tasks not started (MAG-41 … MAG-43) |
+| SRS | First version; requirement numbers for the critical flows | **Done** for this point – first version merged, Flow 3 numbers added (MAG-48); Flow 2 numbers open (MAG-44) |
+| DESIGN | First version; UI sketches for M3, M5, M7 | **Done** for this point – first version merged, sketches added (MAG-49); image link to be fixed |
+| PMP-1, PMP-2 | Project, team and plan | **Done** |
 
-**Changes to the plan (if any):**
+**Sprint 2 progress:** 3 of 16 tasks done (MAG-35, MAG-48, MAG-49).
+
+**Changes to the plan:**
+- Sprint 2 started with planning and documentation: closing Sprint 1, creating the Sprint 2 tasks in Jira (12 Nov) and finishing the remaining SRS and SDD tasks. Coding started on 15 Nov with the users table (MAG-35).
+- Login (MAG-35, MAG-36) is needed by every role-based page, so it is done first. The M3 and M4 APIs are built in parallel and tested through the API without the login page.
 
 ---
 
