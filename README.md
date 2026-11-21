@@ -30,9 +30,14 @@ Open two terminals.
 ```bash
 cd backend
 npm install
+cp .env.example .env
 npm run seed
 npm start
 ```
+
+On the first run, open `backend/.env` and set `JWT_SECRET` to any long random text. `.env` is not committed.
+
+Sample users (synthetic): `parent@mag.test`, `specialist@mag.test`, `child@mag.test`. Their test password is `SAMPLE_PASSWORD` in `backend/src/seed.js`.
 
 **2. Frontend** (http://localhost:5173)
 
