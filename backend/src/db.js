@@ -31,6 +31,16 @@ function openDatabase(filename = process.env.DB_FILE || DEFAULT_DB_FILE) {
       name TEXT NOT NULL
     );
 
+    -- Which specialists can see which child. Unlinking deletes the row.
+    CREATE TABLE IF NOT EXISTS specialist_links (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      child_id INTEGER NOT NULL REFERENCES children(id),
+      specialist_id INTEGER NOT NULL REFERENCES users(id),
+      specialist_type TEXT NOT NULL,
+      linked_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE (child_id, specialist_id)
+    );
+
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,

@@ -35,7 +35,9 @@ const sampleTasks = [
 
 // Replaces all users, children and tasks with the sample data.
 function seed(db) {
-  // Children point to users, so they are deleted first.
+  // Links point to children and users, and children point to users,
+  // so they are deleted in this order.
+  db.prepare('DELETE FROM specialist_links').run();
   db.prepare('DELETE FROM children').run();
   db.prepare('DELETE FROM users').run();
   db.prepare('DELETE FROM tasks').run();
@@ -52,11 +54,15 @@ function seed(db) {
     userIds[user.role] = result.lastInsertRowid;
   }
 
-  db.prepare('INSERT INTO children (parent_id, user_id, name) VALUES (?, ?, ?)').run(
+  const child = db.prepare('INSERT INTO children (parent_id, user_id, name) VALUES (?, ?, ?)').run(
     userIds.parent,
     userIds.child,
     'Demo Child'
   );
+
+  db.prepare(
+    'INSERT INTO specialist_links (child_id, specialist_id, specialist_type) VALUES (?, ?, ?)'
+  ).run(child.lastInsertRowid, userIds.specialist, 'Speech therapist');
 
   const insertTask = db.prepare(
     `INSERT INTO tasks (title, description, development_area, due_date)
@@ -71,7 +77,7 @@ function seed(db) {
 if (require.main === module) {
   const db = openDatabase();
   seed(db);
-  console.log(`Seeded ${sampleUsers.length} users, 1 child and ${sampleTasks.length} tasks`);
+  console.log(`Seeded ${sampleUsers.length} users, 1 child, 1 specialist link and ${sampleTasks.length} tasks`);
   db.close();
 }
 
