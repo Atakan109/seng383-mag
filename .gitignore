@@ -2,5 +2,7 @@ node_modules/
 backend/data/
 *.db
 .env
+.env.*
+!.env.example
 .DS_Store
 coverage/
