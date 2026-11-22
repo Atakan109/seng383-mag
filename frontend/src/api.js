@@ -37,6 +37,11 @@ export function getChildTasks(token, childId) {
   return apiRequest(`/children/${childId}/tasks`, { token });
 }
 
+// task: { title, description, developmentArea, dueDate }
+export function assignTask(token, childId, task) {
+  return apiRequest(`/children/${childId}/tasks`, { token, method: 'POST', body: task });
+}
+
 export function markTaskDone(token, childId, taskId) {
   return apiRequest(`/children/${childId}/tasks/${taskId}`, {
     token,
