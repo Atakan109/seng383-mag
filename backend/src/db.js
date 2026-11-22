@@ -48,7 +48,7 @@ function openDatabase(filename = process.env.DB_FILE || DEFAULT_DB_FILE) {
       development_area TEXT,
       due_date TEXT,
       status TEXT NOT NULL DEFAULT 'pending'
-    )
+    );
     
     CREATE TABLE IF NOT EXISTS events (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,7 +58,7 @@ function openDatabase(filename = process.env.DB_FILE || DEFAULT_DB_FILE) {
       starts_at TEXT NOT NULL,
       ends_at TEXT NOT NULL,
       event_type TEXT NOT NULL DEFAULT 'general'
-    )
+    );
   `);
   return db;
 }
