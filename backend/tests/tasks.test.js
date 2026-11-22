@@ -9,7 +9,7 @@ describe('Walking skeleton API', () => {
 
   beforeEach(() => {
     db = openDatabase(':memory:');
-    app = createApp(db);
+    app = createApp(db, { jwtSecret: 'test-secret' });
   });
 
   afterEach(() => {
