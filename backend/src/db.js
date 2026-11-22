@@ -49,6 +49,16 @@ function openDatabase(filename = process.env.DB_FILE || DEFAULT_DB_FILE) {
       due_date TEXT,
       status TEXT NOT NULL DEFAULT 'pending'
     )
+    
+    CREATE TABLE IF NOT EXISTS events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      child_id INTEGER NOT NULL REFERENCES children(id),
+      created_by INTEGER NOT NULL REFERENCES users(id),
+      title TEXT NOT NULL,
+      starts_at TEXT NOT NULL,
+      ends_at TEXT NOT NULL,
+      event_type TEXT NOT NULL DEFAULT 'general'
+    )
   `);
   return db;
 }
