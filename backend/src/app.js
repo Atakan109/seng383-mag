@@ -3,6 +3,7 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const { createToken, requireAuth } = require('./auth');
 const { createSpecialistLinksRouter } = require('./specialistLinks');
+const { createEventsRouter } = require('./events');
 
 // Builds the Express app. The database is passed in so tests can use
 // an in-memory database instead of the real file. jwtSecret signs login tokens.
@@ -62,7 +63,9 @@ function createApp(db, { jwtSecret = process.env.JWT_SECRET } = {}) {
     res.json(tasks);
   });
 
-  app.use('/api', createSpecialistLinksRouter(db, requireAuth(jwtSecret)));
+  const auth = requireAuth(jwtSecret);
+  app.use('/api', createSpecialistLinksRouter(db, auth));
+  app.use('/api', createEventsRouter(db, auth));
 
   return app;
 }
