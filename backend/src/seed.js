@@ -12,35 +12,39 @@ const sampleUsers = [
   { name: 'Demo Child', email: 'child@mag.test', role: 'child' },
 ];
 
+// assignedBy is the role of the sample user who assigned the task to the demo child.
 const sampleTasks = [
   {
     title: 'Read for 20 minutes',
     description: 'Read one chapter of a book.',
     developmentArea: 'Language',
     dueDate: '2026-11-02',
+    assignedBy: 'parent',
   },
   {
     title: 'Practice counting to 50',
     description: 'Count objects at home out loud.',
     developmentArea: 'Cognitive',
     dueDate: '2026-11-03',
+    assignedBy: 'specialist',
   },
   {
     title: 'Play catch for 10 minutes',
     description: 'Throw and catch a soft ball with a parent.',
     developmentArea: 'Motor',
     dueDate: '2026-11-04',
+    assignedBy: 'parent',
   },
 ];
 
 // Replaces all users, children and tasks with the sample data.
 function seed(db) {
-  // Links point to children and users, and children point to users,
+  // Tasks and links point to children and users, and children point to users,
   // so they are deleted in this order.
+  db.prepare('DELETE FROM tasks').run();
   db.prepare('DELETE FROM specialist_links').run();
   db.prepare('DELETE FROM children').run();
   db.prepare('DELETE FROM users').run();
-  db.prepare('DELETE FROM tasks').run();
 
   // Passwords are stored only as bcrypt hashes, never as plain text.
   const passwordHash = bcrypt.hashSync(SAMPLE_PASSWORD, 10);
@@ -65,11 +69,15 @@ function seed(db) {
   ).run(child.lastInsertRowid, userIds.specialist, 'Speech therapist');
 
   const insertTask = db.prepare(
-    `INSERT INTO tasks (title, description, development_area, due_date)
-     VALUES (@title, @description, @developmentArea, @dueDate)`
+    `INSERT INTO tasks (title, description, development_area, due_date, child_id, assigned_by)
+     VALUES (@title, @description, @developmentArea, @dueDate, @childId, @assignedById)`
   );
   for (const task of sampleTasks) {
-    insertTask.run(task);
+    insertTask.run({
+      ...task,
+      childId: child.lastInsertRowid,
+      assignedById: userIds[task.assignedBy],
+    });
   }
 }
 

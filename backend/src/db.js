@@ -41,16 +41,33 @@ function openDatabase(filename = process.env.DB_FILE || DEFAULT_DB_FILE) {
       UNIQUE (child_id, specialist_id)
     );
 
+    -- child_id and assigned_by are filled by the task API. They allow NULL so that
+    -- databases created before these columns existed can be upgraded below.
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
       description TEXT,
       development_area TEXT,
       due_date TEXT,
-      status TEXT NOT NULL DEFAULT 'pending'
+      status TEXT NOT NULL DEFAULT 'pending',
+      child_id INTEGER REFERENCES children(id),
+      assigned_by INTEGER REFERENCES users(id)
     )
   `);
+  addMissingTaskColumns(db);
   return db;
+}
+
+// Older local databases have a tasks table without child_id and assigned_by.
+// CREATE TABLE IF NOT EXISTS does not change an existing table, so add them here.
+function addMissingTaskColumns(db) {
+  const columns = db.prepare('PRAGMA table_info(tasks)').all().map((column) => column.name);
+  if (!columns.includes('child_id')) {
+    db.exec('ALTER TABLE tasks ADD COLUMN child_id INTEGER REFERENCES children(id)');
+  }
+  if (!columns.includes('assigned_by')) {
+    db.exec('ALTER TABLE tasks ADD COLUMN assigned_by INTEGER REFERENCES users(id)');
+  }
 }
 
 module.exports = { openDatabase };
