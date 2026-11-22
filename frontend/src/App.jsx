@@ -1,73 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+import HomePage from './pages/HomePage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import { clearSession, loadSession, saveSession } from './session.js';
 
-const STATUS_LABELS = {
-  pending: 'Bekliyor',
-  done: 'Tamamlandı',
-};
-
+// Shows the login page until the user logs in, then the page for their role.
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [loadState, setLoadState] = useState('loading');
+  const [session, setSession] = useState(loadSession);
 
-  useEffect(() => {
-    let ignore = false;
+  function handleLogin(newSession) {
+    saveSession(newSession);
+    setSession(newSession);
+  }
 
-    async function loadTasks() {
-      try {
-        const res = await fetch('/api/tasks');
-        if (!res.ok) {
-          throw new Error(`Request failed: ${res.status}`);
-        }
-        const data = await res.json();
-        if (!ignore) {
-          setTasks(data);
-          setLoadState('ready');
-        }
-      } catch {
-        if (!ignore) {
-          setLoadState('error');
-        }
-      }
-    }
-
-    loadTasks();
-    return () => {
-      ignore = true;
-    };
+  // Logout only forgets the token in the browser (FR-M1-06).
+  const handleLogout = useCallback(() => {
+    clearSession();
+    setSession(null);
   }, []);
 
-  return (
-    <main>
-      <h1>Görevler</h1>
-      {loadState === 'loading' && <p>Yükleniyor...</p>}
-      {loadState === 'error' && <p role="alert">Görevler yüklenemedi.</p>}
-      {loadState === 'ready' && tasks.length === 0 && <p>Henüz görev yok.</p>}
-      {loadState === 'ready' && tasks.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>Başlık</th>
-              <th>Açıklama</th>
-              <th>Gelişim alanı</th>
-              <th>Bitiş tarihi</th>
-              <th>Durum</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks.map((task) => (
-              <tr key={task.id}>
-                <td>{task.title}</td>
-                <td>{task.description}</td>
-                <td>{task.developmentArea}</td>
-                <td>{task.dueDate}</td>
-                <td>{STATUS_LABELS[task.status] ?? task.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </main>
-  );
+  if (!session) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+  return <HomePage session={session} onLogout={handleLogout} />;
 }
 
 export default App;

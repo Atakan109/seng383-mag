@@ -47,7 +47,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 in the browser. The page lists the sample tasks that come from the SQLite database through the backend API.
+Open http://localhost:5173 in the browser and log in with one of the sample users. Each role sees its own home page: a parent sees their children, a specialist sees the linked children, a child sees the child home page.
 
 ## Tests
 
